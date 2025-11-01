@@ -30,15 +30,15 @@ include $(DEVKITPRO)/libnx/switch_rules
 #     - icon.jpg
 #     - <libnx folder>/default_icon.jpg
 #---------------------------------------------------------------------------------
-VERSION_MAJOR := 4
+VERSION_MAJOR := 1
 VERSION_MINOR := 0
-VERSION_MICRO := 2
+VERSION_MICRO := 0
 
-APP_TITLE	:=	Hekate Toolbox
+APP_TITLE	:=	Ascent Toolbox
 APP_AUTHOR	:=	WerWolv, cathery
 APP_VERSION	:=	${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_MICRO}
 
-TARGET		:=	HekateToolbox
+TARGET		:=	Ascent-Toolbox
 OUTDIR		:=	out
 BUILD		:=	build
 SOURCES		:=	source source/gui source/utils
@@ -56,14 +56,14 @@ ARCH	:=	-march=armv8-a -mtune=cortex-a57 -mtp=soft -fPIE
 CFLAGS	:=	-g -Wall -O2 -ffunction-sections \
 			$(ARCH) $(DEFINES)
 
-CFLAGS	+=	$(INCLUDE) -D__SWITCH__ `freetype-config --cflags`
+CFLAGS	+=	$(INCLUDE) -D__SWITCH__ -I$(DEVKITPRO)/portlibs/switch/include/freetype2
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fexceptions -std=gnu++17
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lnx `freetype-config --libs` -lturbojpeg \
+LIBS	:= -lnx -lfreetype -lharfbuzz -lpng -lbz2 -lz -lturbojpeg \
 			$(foreach lib,$(CUSTOM_LIBS),-l$(lib))
 
 #---------------------------------------------------------------------------------
